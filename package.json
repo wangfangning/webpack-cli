@@ -2,7 +2,7 @@
   "name": "webpack-text",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --open --inline",
     "test": "",
@@ -23,6 +23,7 @@
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.4.0",
+    "babel-plugin-transform-runtime": "^6.0.0",
     "babel-preset-latest": "^6.24.0",
     "css-loader": "^0.27.3",
     "eslint": "^3.7.1",

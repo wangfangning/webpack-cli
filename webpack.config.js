@@ -15,7 +15,7 @@ module.exports = {
     //上下文，__dirname指项目的根目录
     context: __dirname,
     // 入口文件
-    entry: './src/app.js',
+    entry: './src/main.js',
     // {
     //
     //     main: './src/script/main.js',
@@ -31,6 +31,18 @@ module.exports = {
         //输出文件加上域名变成绝对路径
         // publicPath: 'http://www.163.com/'
     },
+    resolve: {
+    extensions: ['', '.js', '.vue', '.json'],
+    fallback: [path.join(__dirname, '../node_modules')],
+    alias: {
+      'src': path.resolve(__dirname, '../src'),
+      'common': path.resolve(__dirname, '../src/common'),
+      'components': path.resolve(__dirname, '../src/components')
+    }
+  },
+  resolveLoader: {
+    fallback: [path.join(__dirname, '../node_modules')]
+  },
     //   resolve: { fallback: path.join(__dirname, "node_modules") },
     // resolveLoader: { fallback: path.join(__dirname, "node_modules") },
     //   resolve: {
