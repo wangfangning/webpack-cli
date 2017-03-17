@@ -2,6 +2,14 @@
 var htmlWebpackPlugin = require('html-webpack-plugin');
 //nide.js 原生方法，不需要install
 var path = require('path');
+var utils = require('./build/utils.js');
+
+var env = process.env.NODE_ENV
+// check env & config/index.js to decide whether to enable CSS source maps for the
+// various preprocessor loaders added to vue-loader at the end of this file
+var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
+var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
+var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
     //上下文，__dirname指项目的根目录
@@ -23,8 +31,8 @@ module.exports = {
         //输出文件加上域名变成绝对路径
         // publicPath: 'http://www.163.com/'
     },
-  //   resolve: { fallback: path.join(__dirname, "node_modules") },
-  // resolveLoader: { fallback: path.join(__dirname, "node_modules") },
+    //   resolve: { fallback: path.join(__dirname, "node_modules") },
+    // resolveLoader: { fallback: path.join(__dirname, "node_modules") },
     //   resolve: {
     //   extensions: ['', '.js', '.vue', '.json'],
     //   fallback: [path.join(__dirname, '../node_modules')],
@@ -36,6 +44,10 @@ module.exports = {
     // },
     module: {
         loaders: [
+          {
+        test: /\.vue$/,
+        loader: 'vue'
+      },
             {
                 //以.js结尾的文件 用babel-loader处理
                 test: /\.js$/,
@@ -43,7 +55,7 @@ module.exports = {
                 include: path.resolve(__dirname, 'src/'),
                 //不用loader处理的文件,__dirname指当前运行环境路径，加上后面的参数路径，解析成绝对路径
                 exclude: path.resolve(__dirname, 'node_modules'),
-                loader: 'babel'
+                loader: 'babel-loader!eslint-loader'
             }, { //处理html模板文件
                 test: /\.html$/,
                 loader: 'html-loader'
@@ -61,11 +73,9 @@ module.exports = {
                 test: /\.json$/,
                 loader: 'json'
             }, {
-              //处理图片文件
+                //处理图片文件
                 test: /\.(png|jpe?g|gif|svg)$/i,
-                loaders: ['url-loader?limit=8000&name=img/[name].[hash:5].[ext]',
-                          'image-webpack-loader'
-              ]
+                loaders: ['url-loader?limit=100&name=img/[name].[hash:5].[ext]', 'image-webpack-loader']
 
             }, {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -78,13 +88,27 @@ module.exports = {
         ]
     },
     postcss: [require('autoprefixer')({browsers: ['last 5 versions']})],
+    // eslint: {
+    //     configFile: './.eslintrc.js'
+    // },
+    vue: {
+    loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
+    postcss: [
+      require('autoprefixer')({
+        browsers: ['last 2 versions', 'Android >= 4.0']
+      })
+    ]
+  },
     plugins: [
-        new htmlWebpackPlugin({filename: 'index.html', template: 'index.html', inject: 'body',minify: {
+        new htmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'index.html',
+            inject: 'body',
+            minify: {
                 removeComments: true,
-                 collapseWhitespace: true
-            }}
-
-      )
+                collapseWhitespace: true
+            }
+        })
         // new htmlWebpackPlugin({
         //     //输出HTML文件名称
         //     filename: 'a.html',

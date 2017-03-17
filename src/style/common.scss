@@ -1,14 +1,30 @@
-@import "./flex.scss";
-html,body{
-  padding: 0;
-  margin: 0;
-  background-color: red;
-}
-ul,li{
-padding: 0;
-margin: 0;
-list-style: none;
-}
-.flex-div{
-  display: flex;
+html{
+
+  width: 100%;
+  height: 100%;
+
+  body{
+    height: 100%;
+    background-image: url('../assets/bg_img.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    p{
+      color: #fe7f05;
+      font-size: .46rem;
+        position: absolute;
+    };
+    .text_one{
+
+      top: 2.4rem;
+      right: 1.3rem;
+    };
+    .text_two{
+      top: 7.7rem;
+      left: 1.4rem;
+    };
+    .text_three{
+      top: 12.36rem;
+      right: 1.7rem;
+    };
+  }
 }
