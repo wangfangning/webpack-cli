@@ -3,4 +3,4 @@ import './style/app.scss';
 function hello (str) {
   console.log('str');
 }
-hello('hello');
+hello('hel lo');
