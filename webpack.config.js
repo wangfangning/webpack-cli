@@ -27,7 +27,7 @@ module.exports = {
     //     c: './src/script/c.js'
     // },
     // 输出文件
-    output: {
+    output: {+1
         // 输出文件路径
         path: './dist',
         filename: 'static/js/[name].bundle.js'
